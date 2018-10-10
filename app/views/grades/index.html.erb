@@ -1,0 +1,47 @@
+
+<style>
+
+  .btn-add{
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  td a:visited{
+    color:blue;
+  }
+  table{
+    border: 1px solid #ccc!important;
+    border-radius: 16px;
+  }
+</style>
+<div class="col-12">
+  <h1>薷的寶寶評分紀錄</h1>
+</div>
+<div class="col-12">
+<table class="col-12">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>分數</th>
+      <th>寶寶紀錄</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @grades.each do |grade| %>
+      <tr>
+        <td><%= grade.date %></td>
+        <td><%= grade.grade %></td>
+        <td><%= grade.description %></td>
+        <td><%= link_to '編輯', edit_grade_path(grade) %></td>
+        <td><%= link_to '刪除', grade, method: :delete, data: { confirm: '確定嗎？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+<br>
+<br>
+<br>
+<%= link_to '新增分數', new_grade_path,{ :class=>"btn btn-warning btn-block btn-add" } %>

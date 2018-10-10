@@ -1,0 +1,44 @@
+<style>
+input{
+  width: 100%;
+}
+.actions{
+  background-color: orange;
+  color: white;
+}
+</style>
+<%= form_with(model: grade, local: true) do |form| %>
+  <% if grade.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(grade.errors.count, "error") %> prohibited this grade from being saved:</h2>
+
+      <ul>
+      <% grade.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label "日期" %>
+    <br>
+    <%= form.text_field :date, id: :grade_date, type: :date%>
+  </div>
+
+  <div class="field">
+    <%= form.label "分數" %>
+    <br>
+    <%= form.number_field :grade, id: :grade_grade, type: :number %>
+  </div>
+
+  <div class="field">
+    <%= form.label "寶寶紀錄" %>
+    <br>
+    <%= form.text_field :description, id: :grade_description, type: :textarea %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "建立"  %>
+  </div>
+<% end %>
