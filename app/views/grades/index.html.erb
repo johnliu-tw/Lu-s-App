@@ -45,6 +45,9 @@
         <tr>
           <td>平均:</td>
           <td><%= number_with_precision(@average_grade, :precision => 1) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
     </tbody>
   </table>
@@ -55,7 +58,28 @@
 <br>
 <%= link_to '新增分數', new_grade_path,{ :class=>"btn btn-warning btn-block btn-add mt-3" } %>
 <script>
+
+if( getParameterByName('query_month')){
+  $("#selected-month").val(getParameterByName('query_month'))
+}
+else{
+  var d = new Date()
+  var m = d.getMonth() + 1;
+  var y = d.getFullYear();
+  $("#selected-month").val(y + "-" + m)
+}
+
 $("#selected-month").change(function(){
   window.location.href= "?query_month=" + $("#selected-month").val()
 })
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 </script>
