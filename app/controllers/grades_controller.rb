@@ -4,7 +4,15 @@ class GradesController < ApplicationController
   # GET /grades
   # GET /grades.json
   def index
-    @grades = Grade.all.order(:date)
+
+    if params[:query_month]
+      @grades = Grade.all.where("date >= '#{params[:query_month]}-01' and date <= '#{params[:query_month]}-31'").order(:date)
+    else
+      @grades = Grade.where("date >= ? and date <= ?", Time.now().beginning_of_month, Time.now().end_of_month).order(:date)
+    end
+
+    @average_grade = @grades.average(:grade)
+
   end
 
   # GET /grades/1
@@ -15,6 +23,13 @@ class GradesController < ApplicationController
   # GET /grades/new
   def new
     @grade = Grade.new
+    @motivatied_word = 
+    ["每天努力紀錄，今天比昨天更好，寶貝加油",
+     "今天上班辛苦了，回家趕快洗洗睡休息",
+     "累累時，看著自己抓到的可愛寶可夢，舒壓吧",
+     "上班之餘，也要把握時間運動運動，讓身體更健康唷",
+     "充當寶寶們的守護小天使是很辛苦的責任，加油～",
+    ].shuffle!.first
   end
 
   # GET /grades/1/edit

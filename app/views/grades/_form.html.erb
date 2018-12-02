@@ -4,7 +4,13 @@ input{
 }
 .actions{
   background-color: orange;
+}
+.actions input{
   color: white;
+}
+#grade_description{
+  height: 150px;
+  width: 100%;
 }
 </style>
 <%= form_with(model: grade, local: true) do |form| %>
@@ -35,7 +41,7 @@ input{
   <div class="field">
     <%= form.label "寶寶紀錄" %>
     <br>
-    <%= form.text_field :description, id: :grade_description, type: :textarea %>
+    <%= form.text_area :description, id: :grade_description %>
   </div>
 
   <div class="actions">

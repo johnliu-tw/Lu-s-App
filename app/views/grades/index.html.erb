@@ -18,31 +18,44 @@
   <h1>薷的寶寶評分紀錄</h1>
 </div>
 <div class="col-12">
-<table class="col-12">
-  <thead>
-    <tr>
-      <th>日期</th>
-      <th>分數</th>
-      <th>寶寶紀錄</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @grades.each do |grade| %>
+  <div class="col-12" style="padding:0; margin-bottom:20px;">
+    <span><img src="/select.gif" alt="" style="width:52px;height:52px;">  選擇月份: </span>
+    <input id="selected-month" type="month">
+  </div>
+  <table class="col-12">
+    <thead>
       <tr>
-        <td><%= grade.date %></td>
-        <td><%= grade.grade %></td>
-        <td><%= grade.description %></td>
-        <td><%= link_to '編輯', edit_grade_path(grade) %></td>
-        <td><%= link_to '刪除', grade, method: :delete, data: { confirm: '確定嗎？' } %></td>
+        <th>日期</th>
+        <th>分數</th>
+        <th>寶寶紀錄</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @grades.each do |grade| %>
+        <tr>
+          <td><%= grade.date.to_date %></td>
+          <td><%= grade.grade %></td>
+          <td><%= grade.description %></td>
+          <td><%= link_to '編輯', edit_grade_path(grade) %></td>
+          <td><%= link_to '刪除', grade, method: :delete, data: { confirm: '確定嗎？' } %></td>
+        </tr>
+      <% end %>
+        <tr>
+          <td>平均:</td>
+          <td><%= number_with_precision(@average_grade, :precision => 1) %></td>
+        </tr>
+    </tbody>
+  </table>
 </div>
 <br>
 <br>
 <br>
 <br>
-<%= link_to '新增分數', new_grade_path,{ :class=>"btn btn-warning btn-block btn-add" } %>
+<%= link_to '新增分數', new_grade_path,{ :class=>"btn btn-warning btn-block btn-add mt-3" } %>
+<script>
+$("#selected-month").change(function(){
+  window.location.href= "?query_month=" + $("#selected-month").val()
+})
+</script>
