@@ -6,7 +6,17 @@ class GradesController < ApplicationController
   def index
 
     if params[:query_month]
-      @grades = Grade.all.where("date >= '#{params[:query_month]}-01' and date <= '#{params[:query_month]}-31'").order(:date)
+
+      @begin_day = params[:query_month] + '-01'
+      if ['01','03','05','07','08','10','12'].include?(params[:query_month].last(2))
+        @end_day = params[:query_month] + '-31'
+      elsif ['02'].include?(params[:query_month].last(2))
+        @end_day = params[:query_month] + '-28'
+      else 
+        @end_day = params[:query_month] + '-30'
+      end
+
+      @grades = Grade.all.where("date >= '#{@begin_day}' and date <= '#{@end_day}'").order(:date)
     else
       @grades = Grade.where("date >= ? and date <= ?", Time.now().beginning_of_month, Time.now().end_of_month).order(:date)
     end
